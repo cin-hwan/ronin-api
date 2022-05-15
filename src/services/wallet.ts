@@ -1,5 +1,6 @@
 import { Service } from "emvc-decorators";
 import { CURRENCY_CODE } from "../consts/currency";
+import { INSUFFICIENT_AMOUNT, SOURCE_WALLET_NOT_FOUND, TARGET_WALLET_NOT_FOUND } from "../consts/errors";
 
 @Service()
 export default class WalletService {
@@ -33,5 +34,21 @@ export default class WalletService {
 
     getWalletByWalletNo(walletNo: string) {
         return WalletService._wallets.find(wallet => wallet.no === walletNo)
+    }
+
+    sendAssets(from: string, to: string, asset: string, amount: number) {
+        const sourceWallet = WalletService._wallets.find(wallet => wallet.no === from)
+        const targetWallet = WalletService._wallets.find(wallet => wallet.no === to)
+        if (!sourceWallet) throw SOURCE_WALLET_NOT_FOUND
+        if (!targetWallet) throw TARGET_WALLET_NOT_FOUND
+
+        const sourceAsset = sourceWallet?.assets.find(a => a.currency === asset)
+        const targetAsset = targetWallet?.assets.find(a => a.currency === asset) || {
+            currency: asset,
+            balance: 0
+        }
+        if (!sourceAsset || sourceAsset.balance < amount) throw INSUFFICIENT_AMOUNT
+        sourceAsset.balance -= amount
+        targetAsset.balance += amount
     }
 }
