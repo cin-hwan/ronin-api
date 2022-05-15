@@ -5,6 +5,7 @@ COPY package.json /builder/
 COPY yarn.lock /builder/
 RUN yarn
 COPY . .
+COPY .env.production .env
 
 EXPOSE 4000
 
