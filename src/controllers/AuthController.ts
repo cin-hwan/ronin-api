@@ -4,7 +4,7 @@ import { MISSING_REFRESH_TOKEN } from "../consts/errors";
 import AuthService from "../services/auth";
 
 @Controller('/auth')
-export class AuthController {
+export default class AuthController {
     @Inject()
     authService!: AuthService
 

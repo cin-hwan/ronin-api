@@ -1,13 +1,16 @@
 import { Service } from "emvc-decorators";
-import { INVALID_REFRESH_TOKEN, WRONG_PASSWORD } from "../consts/errors";
-import { sign as signJwt, verify } from 'jsonwebtoken'
+import { sign as signJwt, verify } from 'jsonwebtoken';
 import APP_CONFIGS from "../consts/configs";
+import { CURRENCY_CODE } from "../consts/currency";
+import { INVALID_REFRESH_TOKEN, WRONG_PASSWORD } from "../consts/errors";
 
 @Service()
 export default class AuthService {
     private _user = {
         id: 1,
-        name: 'Hoan Than'
+        name: 'Hoan Than',
+        walletNo: '7300 3777 3888 3334',
+        localCurrency: CURRENCY_CODE.VND
     }
 
     getUserByPassword(password: string) {
