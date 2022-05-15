@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  ronin_api:
+    build: .
+    image: ronin_api:latest
+    container_name: ronin_api
+    ports:
+      - 4000:4000
