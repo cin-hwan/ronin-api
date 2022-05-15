@@ -17,7 +17,6 @@ const app = express();
 const startServer = async () => {
   app.use(cors())
   app.use(json())
-  app.use('/static', express.static(path.resolve(__dirname, './static')))
   app.use(await createRoutes()); // using registered routes from controllers and actions
 
   app.use(errorHandler)
